@@ -1,10 +1,43 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import Details from "./sidebar_components/FlightDetails";
+import History from "./sidebar_components/FlightHistory";
+import '../assets/css/Sidebar.css'
 
-export default class Sidebar extends Component {
+class Sidebar extends Component {
     render() {
-        return (
-            <div>
-            </div>
-        )
+        if(this.props.focused) {
+            return(
+                <div className={"sidebar"}>
+                    <Details data={this.props.focusedData} />
+                    <History data={this.props.focusedData.trail} />
+                </div>
+                
+            )
+        } else {
+            return(
+                null
+            )
+        }
+    }
+
+    shouldComponentUpdate(){
+        const { pending } = this.props;
+        if (pending) {
+            return false;
+        }
+        return true;
     }
 }
+
+const mapStateToProps = (state) => ({
+    pending: state.pending,
+    focused: state.focused,
+    focusedData: state.focusedData
+})
+
+const mapDispatchToProps = null;
+
+export default connect(
+    mapStateToProps, mapDispatchToProps
+)(Sidebar)

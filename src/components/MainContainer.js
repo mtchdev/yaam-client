@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
+import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux'
 import { Container, Row, Col } from "shards-react";
 import Sidebar from "@components/Sidebar";
 import TopBar from "@components/TopBar";
 import MapContainer from './MapContainer';
-import SidebarStyle from '../assets/css/Sidebar.css.js'
 
-export default class MainContainer extends Component {
+class MainContainer extends Component {
     render() {
         return (
             <Container fluid style={{padding: 0, height: '100vh'}}>
@@ -14,11 +14,9 @@ export default class MainContainer extends Component {
                         <TopBar height="5vh"></TopBar>
                     </Col>
                 </Row>
-                <Row noGutters style={{height: '94vh'}}>
-                    <Col md="2" style={SidebarStyle.container}>
-                        <Sidebar />
-                    </Col>
-                    <Col md="10">
+                <Sidebar/>
+                <Row noGutters style={{height: '94vh'}}>  
+                    <Col>
                         <MapContainer />
                     </Col>
                 </Row>
@@ -26,3 +24,16 @@ export default class MainContainer extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => ({
+    
+})
+
+const mapDispatchToProps = {
+    
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MainContainer)

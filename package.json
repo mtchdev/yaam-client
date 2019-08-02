@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chart.js": "^2.8.0",
     "eslint": "^5.16.0",
     "leaflet": "^1.5.1",
     "leaflet-rotatedmarker": "^0.2.0",
     "link-module-alias": "^1.2.0",
     "react": "^16.8.6",
+    "react-chartjs-2": "^2.7.6",
     "react-dom": "^16.8.6",
     "react-leaflet": "^2.4.0",
     "react-leaflet-rotatedmarker": "^0.1.0",

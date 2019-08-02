@@ -1,0 +1,48 @@
+.sidebar {
+    position: absolute;
+    background-color: whitesmoke;
+    width: 20vw;
+    height: 95vh;
+    padding: 10px;
+    z-index: 1000;
+    text-align: center
+}
+
+.mainDetailsFlex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainDetailsFlex div {
+    padding: 10px
+}
+
+.mainDetailsFlex h4 {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.mainDetailsFlex p {
+    margin: 0;
+}
+
+.subdetailsFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subdetailsFlex p, .subdetailsFlex img {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0
+}
+
+.subdetailsFlex p {
+    text-align: left;
+}
+
+.sidebar > .card {
+    margin-top: 1em;
+}

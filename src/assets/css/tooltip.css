@@ -1,0 +1,10 @@
+/* .leaflet-tooltip-top:before, 
+.leaflet-tooltip-bottom:before, 
+.leaflet-tooltip-left:before, 
+.leaflet-tooltip-right:before {
+    border: none !important;
+} */
+.leaflet-tooltip {
+    border-radius: 3;
+    padding: 0;
+}

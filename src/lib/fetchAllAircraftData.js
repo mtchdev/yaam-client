@@ -1,4 +1,4 @@
-import { fetchAllAircraftPending, fetchAllAircraftSuccess, fetchAllAircraftError } from "../redux/actions";
+import {fetchAllAircraftSuccess, fetchAllAircraftError } from "../redux/actions";
 
 const fetchAircraftData = () => {
     return async dispatch => {
