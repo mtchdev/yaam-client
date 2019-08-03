@@ -5,6 +5,7 @@
   "dependencies": {
     "chart.js": "^2.8.0",
     "eslint": "^5.16.0",
+    "geolib": "^3.0.4",
     "leaflet": "^1.5.1",
     "leaflet-rotatedmarker": "^0.2.0",
     "link-module-alias": "^1.2.0",

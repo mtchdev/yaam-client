@@ -1,9 +1,9 @@
 .sidebar {
     position: absolute;
     background-color: whitesmoke;
-    width: 20vw;
-    height: 95vh;
-    padding: 10px;
+    width: 22vw;
+    height: 94vh;
+    padding: 20px;
     z-index: 1000;
     text-align: center
 }

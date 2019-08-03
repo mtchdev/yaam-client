@@ -31,11 +31,12 @@ class MapContainer extends Component {
         }
 
         return (
-            <Map center={mapCenter} maxBounds={bounds} maxBoundsViscosity={0.9} zoom={zoomLevel} minZoom={zoomLevel} id='mapid' doubleClickZoom={false} style={{height: '100%'}} zoomControl={false}>
+            <Map ref='map' center={mapCenter} maxBounds={bounds} maxBoundsViscosity={0.9} zoom={zoomLevel} minZoom={zoomLevel} id='mapid' doubleClickZoom={false} style={{height: '100%'}} zoomControl={false}>
                 <TileLayer attribution={attr}  url={tiles}/>
                 {
                     allAircraft.map((flight, index) => {
                         let showTooltip = false;
+                        if (flight.coords.lat === null || flight.coords.long === null) { return null }
                         if (flight.callsign === focusedData){ showTooltip = true }
                         return(
                             <Marker 
@@ -60,7 +61,26 @@ class MapContainer extends Component {
     componentDidMount = () => {
         const { fetchAllData } = this.props
         fetchAllData();
+
+
+        this.refs.map.leafletElement.on('moveend', (e) => {
+            const map = e.target;
+            const bounds = map.getBounds()
+            this.setState({bounds})
+            
+        });
+
+        
     }
+
+    isInBounds = (coords, bounds) => {
+        // TODO: Implement
+    }
+    
+
+    componentDidUpdate = () => {
+    }
+    
     
 }
 

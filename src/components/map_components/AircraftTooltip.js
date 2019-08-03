@@ -5,10 +5,12 @@ import {Container, Row, Col} from "shards-react";
 export default class AircraftTooltip extends Component {
 
     getLogoFromCallsign = (callsign) => {
-        // TODO: Implement
+
+        const airlineCode = callsign.substr(0, 3);
+        const url = `https://planefinder.net/flightstat/v2/getLogo3x.php?airlineCode=${airlineCode}&requestThumb=1`
         return (
             <div style={{paddingRight: 10, width: '6em'}}>
-                <img style={{maxWidth: '100%', height: 'auto'}} src={"https://planefinder.net/flightstat/v2/getLogo3x.php?airlineCode=EZY&requestThumb=1"} alt={""}/>
+                <img style={{maxWidth: '100%', height: 'auto'}} src={url} alt={""}/>
             </div>
         );
     }

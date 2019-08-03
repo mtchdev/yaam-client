@@ -23,6 +23,8 @@ export default class FlightHistory extends Component {
       ],
       labels: datasets.time
     };
+
+    // Note that there are a LOT of hacks here to get the chart to fit how I want it to in the div.
     const options = {
       scales: {
         xAxes: [
@@ -33,7 +35,18 @@ export default class FlightHistory extends Component {
         yAxes: [
           {
             id: "alt",
-            display: false
+            display: true,
+            gridLines: {
+                display: false,
+                drawBorder: false,
+                drawTicks: false
+            },
+            ticks: {
+                callback: (value, index, values) => {
+                    return ''
+                },
+                mirror: true
+            }
           },
           {
             id: "spd",
@@ -43,6 +56,7 @@ export default class FlightHistory extends Component {
       },
       legend: {
         display: true,
+        position: 'bottom',
         labels: {
           usePointStyle: true
         },
@@ -61,7 +75,8 @@ export default class FlightHistory extends Component {
 
     return (
       <Card>
-        <CardBody style={{ padding: "0px" }}>
+        <CardHeader><h5 style={{margin: 0}}>Flight History</h5></CardHeader>
+        <CardBody style={{padding: 0, paddingBottom: '15px', paddingTop: '15px'}}>
           <div>
             <Line data={rootData} options={options} />
           </div>
