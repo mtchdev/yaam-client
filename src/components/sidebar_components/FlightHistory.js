@@ -93,8 +93,7 @@ export default class FlightHistory extends Component {
     trail.forEach(capture => {
       alt.push(capture.alt);
       speed.push(capture.spd);
-      
-      const timestamp = new Date(capture.time);
+      const timestamp = new Date(capture.ts);
       time.push(timestamp.toUTCString());
     });
 

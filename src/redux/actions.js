@@ -19,8 +19,9 @@ export const unFocusAircraft = () => ({
 
 
 // Actions involving fetching the expanded data of a single aircraft
-export const fetchAircraftPending = () => ({
+export const fetchAircraftPending = (payload) => ({
     type: FETCH_AIRCRAFT_PENDING,
+    payload
 })
 
 export const fetchAircraftSuccess = (payload) => ({

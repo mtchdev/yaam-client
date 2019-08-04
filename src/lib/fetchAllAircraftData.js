@@ -4,7 +4,7 @@ const fetchAircraftData = () => {
     return async dispatch => {
         dispatch(fetchAllAircraftError());
         try {
-            let res = await fetch('http://localhost:3000/api/data')
+            let res = await fetch('http://localhost:5000/api/data')
             res = await res.json();
             dispatch(fetchAllAircraftSuccess(res));
         } catch (error) {

@@ -47,18 +47,20 @@ class RotatedMarker extends MapLayer {
   }
 
   handleClick(props) {
-    const { focused, fetchAircraftExtendedData, unFocusAircraft, focusedData, id } = props;
+    const { focused, fetchAircraftExtendedData, unFocusAircraft, focusedData, callsign } = props;
     if(!focused){
-      fetchAircraftExtendedData();
-    } else {
-      if(focusedData.callsign === id){
+      fetchAircraftExtendedData(callsign);
+    } else if (focusedData.callsign === callsign) {
         unFocusAircraft();
 
         // TODO: Once we have more aircraft, add an callsign parameter to this function.
         // fetchAircraftExtendedData();
-      }
+    } else {
+      unFocusAircraft();
+      fetchAircraftExtendedData(callsign);
     }
   }
+
 
   render() {
     const { children } = this.props;

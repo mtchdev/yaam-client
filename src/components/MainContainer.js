@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux'
 import { Container, Row, Col } from "shards-react";
-import Sidebar from "@components/Sidebar";
-import TopBar from "@components/TopBar";
+import Sidebar from "../components/Sidebar";
+import TopBar from "../components/TopBar";
 import MapContainer from './MapContainer';
 
 class MainContainer extends Component {

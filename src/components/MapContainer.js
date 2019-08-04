@@ -41,7 +41,7 @@ class MapContainer extends Component {
                         return(
                             <Marker 
                             key={index}
-                            id={flight.callsign}
+                            callsign={flight.callsign}
                             position={[flight.coords.lat, flight.coords.long]} 
                             rotationAngle={parseInt(flight.heading - defaultRotationAngle)}
                             icon={L.icon({iconUrl: 'airplane.png', iconAnchor: [16, 16]})} >
