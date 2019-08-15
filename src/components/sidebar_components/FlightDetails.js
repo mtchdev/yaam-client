@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getDistance } from 'geolib';
+import { FaArrowCircleRight } from "react-icons/fa";
 import {
   Card,
   CardHeader,
@@ -33,54 +34,72 @@ export default class FlightHistory extends Component {
 
     return (
       <Card className={"sidebar-flightdetails"}>
-        <CardHeader>
-          <h5 style={{ margin: 0 }}>{callsign}</h5>
-        </CardHeader>
         <CardBody>
           <div className="mainDetailsFlex">
             <div>
-              <h4>{dep.code.icao}</h4>
-              <p>{dep.region.city}</p>
+              <h2>{dep.code.icao}</h2>
+              {/* <p>{dep.region.city}</p> */}
+              <p>City</p>
             </div>
 
             <div>
-              <h5>to</h5>
+              <h5><FaArrowCircleRight /></h5>
             </div>
 
             <div>
-              <h4>{arr.code.icao}</h4>
-              <p>{arr.region.city}</p>
+              <h2>{arr.code.icao}</h2>
+              {/* <p>{arr.region.city}</p> */}
+              <p>City</p>
             </div>
           </div>
           <Progress value={progress} />
           <hr />
           <div className={"subdetailsFlex"}>
-            <img
-              style={{ maxWidth: "50%", height: "50%" }}
-              src={
-                "https://planefinder.net/flightstat/v2/getLogo3x.php?airlineCode=SAS&requestThumb=1"
-              }
-              alt={""}
-            />
+            <div className="logoAndCallsignWrapper">
+              <div>
+                <img
+                  style={{ width: "auto", maxHeight: "3em" }}
+                  src={
+                    `https://planefinder.net/flightstat/v2/getLogo3x.php?airlineCode=${callsign.substr(0, 3)}&requestThumb=1`
+                  }
+                  alt={""}
+                />
+              </div>
+              <h3>{callsign}</h3>
+            </div>
             <div>
-              <p style={{ fontSize: 14 }}>Aircraft Type</p>
+              <p style={{ fontSize: 14 }}>AIRCRAFT TYPE</p>
               {/* <p style={{color: 'gray'}}>{aircraft}</p> */}
               <Badge theme="primary">{aircraft}</Badge>
             </div>
           </div>
-        <br />
           <div className={"subdetailsFlex"}>
             <div>
-              <p style={{ fontSize: 14 }}>Altitude</p>
-              <p style={{color: 'gray'}}>{alt}</p>
+              <p style={{ fontSize: 14 }}>ALTITUDE</p>
+              <p style={{ color: "gray" }}>{alt}</p>
             </div>
             <div>
-              <p style={{ fontSize: 14 }}>Speed</p>
-              <p style={{color: 'gray'}}>{spd}</p>
+              <p style={{ fontSize: 14 }}>SPEED</p>
+              <p style={{ color: "gray" }}>{spd}</p>
             </div>
             <div>
-              <p style={{ fontSize: 14 }}>Heading</p>
-              <p style={{color: 'gray'}}>{hd}</p>
+              <p style={{ fontSize: 14 }}>HEADING</p>
+              <p style={{ color: "gray" }}>{hd}°</p>
+            </div>
+          </div>
+          <div className={"subdetailsFlex"}>
+            <div>
+              <p style={{ fontSize: 14 }}>PILOT</p>
+              {/* <p style={{color: 'gray'}}>{pilotName}</p> */}
+              <p style={{ color: "gray" }}>John Doe</p>
+            </div>
+            <div>
+              <p style={{ fontSize: 14 }}>FIELD 5</p>
+              <p style={{ color: "gray" }}>Value</p>
+            </div>
+            <div>
+              <p style={{ fontSize: 14 }}>FIELD 6</p>
+              <p style={{ color: "gray" }}>Value</p>
             </div>
           </div>
         </CardBody>
