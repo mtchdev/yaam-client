@@ -22,21 +22,22 @@ class MapContainer extends Component {
         const zoomLevel = 3;
         const bounds = L.latLngBounds(L.latLng(90, -180), L.latLng(-90, 180));
         const defaultRotationAngle = 45;
-        const { allAircraft, pending, focused, focusedData } = this.props;
+        const { allAircraft, pending, focusedData } = this.props;
         
         // If an aircraft is focused, this will show the polyline
-        let polyline = null;
-        if(focused && !pending){
+        let polyline = null;    
+        if(!pending && focusedData !== undefined){
             polyline = (<Polyline positions={this.props.focusedData.trail}/>)
         }
 
         return (
-            <Map ref='map' center={mapCenter} maxBounds={bounds} maxBoundsViscosity={0.9} zoom={zoomLevel} minZoom={zoomLevel} id='mapid' doubleClickZoom={false} style={{height: '100%'}} zoomControl={false}>
+            <Map ref='map' preferCanvas={true} center={mapCenter} maxBounds={bounds} maxBoundsViscosity={0.9} zoom={zoomLevel} minZoom={zoomLevel} id='mapid' doubleClickZoom={false} style={{height: '100%'}} zoomControl={false}>
                 <TileLayer attribution={attr}  url={tiles}/>
                 {
                     allAircraft.map((flight, index) => {
                         let showTooltip = false;
                         if (flight.coords.lat === null || flight.coords.long === null) { return null }
+                        if (flight.altitude < 2000) { return null }
                         if (flight.callsign === focusedData){ showTooltip = true }
                         return(
                             <Marker 
@@ -57,6 +58,23 @@ class MapContainer extends Component {
         )
     }
 
+    shouldComponentUpdate = (nextProps, nextState) => {
+        console.log('Attempted Rerender');
+        
+        if(this.props.pending && !nextProps.pending) { 
+            return true;
+        }
+
+        if(this.props.focused !== nextProps.focused){
+            return true;
+        }
+
+        if(this.props.allAircraft !== nextProps.allAircraft){
+            return true;
+        }
+        console.log('Stopped Rerender');
+        return false;
+    }
 
     componentDidMount = () => {
         const { fetchAllData } = this.props
@@ -76,19 +94,12 @@ class MapContainer extends Component {
     isInBounds = (coords, bounds) => {
         // TODO: Implement
     }
-    
-
-    componentDidUpdate = () => {
-    }
-    
-    
 }
 
 const mapStateToProps = (state) => ({
     error: getAllAircraftError(state),
     allAircraft: getAllAircraft(state),
     pending: getAllAircraftPending(state),
-    focused: state.focused,
     focusedData: state.focusedData
 })
 

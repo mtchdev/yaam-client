@@ -18,6 +18,7 @@ const initalState = {
 
 export default function(state = initalState, action) {
     switch(action.type) {
+        // TODO: Look into getting rid of this, since we can use the focused aircraft data instead of dispatching twice...
         case FOCUS_AIRCRAFT:
             return {
                 ...state,
