@@ -42,6 +42,7 @@ export default class FlightHistory extends Component {
                 drawTicks: false
             },
             ticks: {
+                min: 0,
                 callback: (value, index, values) => {
                     return ''
                 },
@@ -50,7 +51,10 @@ export default class FlightHistory extends Component {
           },
           {
             id: "spd",
-            display: false
+            display: false,
+            ticks: {
+              min: 0,
+            }
           }
         ]
       },

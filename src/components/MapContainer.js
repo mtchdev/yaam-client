@@ -9,10 +9,12 @@ import fetchAllAircraftDataAction from "../lib/fetchAllAircraftData";
 // import { getAircraftError, getAircraftPending, getAircraft } from "../redux/reducers/aircraftFocus";
 import { getAllAircraftError, getAllAircraftPending, getAllAircraft } from "../redux/reducers/aircraftDataReducer";
 
+const DEFAULT_BOUNDS = L.latLngBounds(L.latLng(90, -180), L.latLng(-90, 180));
+
 class MapContainer extends Component {
     constructor(props) {
         super(props)
-        this.state = {data: []}
+        this.state = {data: [], bounds: L.latLngBounds(L.latLng(90, -180), L.latLng(-90, 180))}
     }
     
     render() {
@@ -20,8 +22,8 @@ class MapContainer extends Component {
         const attr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
         const mapCenter = [30, 0];
         const zoomLevel = 3;
-        const bounds = L.latLngBounds(L.latLng(90, -180), L.latLng(-90, 180));
         const defaultRotationAngle = 45;
+        const { bounds } = this.state;
         const { allAircraft, pending, focusedData } = this.props;
         
         // If an aircraft is focused, this will show the polyline
@@ -31,13 +33,15 @@ class MapContainer extends Component {
         }
 
         return (
-            <Map ref='map' preferCanvas={true} center={mapCenter} maxBounds={bounds} maxBoundsViscosity={0.9} zoom={zoomLevel} minZoom={zoomLevel} id='mapid' doubleClickZoom={false} style={{height: '100%'}} zoomControl={false}>
+            <Map ref='map' preferCanvas={true} center={mapCenter} maxBounds={DEFAULT_BOUNDS} maxBoundsViscosity={0.9} zoom={zoomLevel} minZoom={zoomLevel} id='mapid' doubleClickZoom={false} style={{height: '100%'}} zoomControl={false}>
                 <TileLayer attribution={attr}  url={tiles}/>
                 {
                     allAircraft.map((flight, index) => {
                         let showTooltip = false;
-                        if (flight.coords.lat === null || flight.coords.long === null) { return null }
-                        if (flight.altitude < 2000) { return null }
+                        if (flight.coords.lat === null || flight.coords.long === null ||
+                            flight.altitude < 2000 || !this.isInBounds(flight.coords, bounds)) 
+                            { return null };
+                        
                         if (flight.callsign === focusedData){ showTooltip = true }
                         return(
                             <Marker 
@@ -59,20 +63,17 @@ class MapContainer extends Component {
     }
 
     shouldComponentUpdate = (nextProps, nextState) => {
-        console.log('Attempted Rerender');
-        
         if(this.props.pending && !nextProps.pending) { 
             return true;
         }
 
-        if(this.props.focused !== nextProps.focused){
+        if(this.state.bounds !== nextState.bounds) { 
             return true;
         }
 
         if(this.props.allAircraft !== nextProps.allAircraft){
             return true;
         }
-        console.log('Stopped Rerender');
         return false;
     }
 
@@ -80,19 +81,18 @@ class MapContainer extends Component {
         const { fetchAllData } = this.props
         fetchAllData();
 
-
         this.refs.map.leafletElement.on('moveend', (e) => {
             const map = e.target;
             const bounds = map.getBounds()
-            this.setState({bounds})
-            
+            this.setState({bounds})        
         });
 
         
     }
 
     isInBounds = (coords, bounds) => {
-        // TODO: Implement
+        return coords.lat > bounds.getSouth() && coords.lat < bounds.getNorth() &&
+            coords.long > bounds.getWest() && coords.long < bounds.getEast();
     }
 }
 
