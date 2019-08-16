@@ -1,8 +1,8 @@
-import {fetchAllAircraftSuccess, fetchAllAircraftError } from "../redux/actions";
+import {fetchAllAircraftSuccess, fetchAllAircraftError, fetchAircraftPending } from "../redux/actions";
 
 const fetchAircraftData = () => {
     return async dispatch => {
-        dispatch(fetchAllAircraftError());
+        dispatch(fetchAircraftPending());
         try {
             let res = await fetch('http://localhost:5000/api/data')
             res = await res.json();

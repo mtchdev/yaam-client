@@ -6,6 +6,7 @@ import AircraftTooltip from "./map_components/AircraftTooltip";
 import { connect } from 'react-redux';
 import '../assets/css/tooltip.css';
 import fetchAllAircraftDataAction from "../lib/fetchAllAircraftData";
+import fetchAircraftExtendedData from "../lib/focusOnAircraft";
 // import { getAircraftError, getAircraftPending, getAircraft } from "../redux/reducers/aircraftFocus";
 import { getAllAircraftError, getAllAircraftPending, getAllAircraft } from "../redux/reducers/aircraftDataReducer";
 import { FIRPolygons } from "./map_components/FIRPolys";
@@ -26,7 +27,6 @@ class MapContainer extends Component {
         const defaultRotationAngle = 45;
         const { bounds, FIRs } = this.state;
         const { allAircraft, pending, focusedData } = this.props;
-        
         const { pilots, atc } = allAircraft;
 
         // If an aircraft is focused, this will show the polyline
@@ -61,6 +61,7 @@ class MapContainer extends Component {
                     })
                 }
 
+                {/* Render the path of the aircraft (if focused) and all the FIR polygons. */}
                 {FIRPolygons(FIRs, atc)}
                 {polyline}
 
@@ -68,6 +69,9 @@ class MapContainer extends Component {
         )
     }
 
+    /*
+        The map will rerender only if the bounds are changed or new data is loaded.
+    */
     shouldComponentUpdate = (nextProps, nextState) => {
         if(this.props.pending && !nextProps.pending) { 
             return true;
@@ -95,9 +99,21 @@ class MapContainer extends Component {
             this.setState({bounds})        
         });
 
+        setInterval(this.updateData, 30*1000)
+
         
     }
 
+    updateData = () => {
+        const { fetchAllData, fetchAircraftExtendedData, pending, focusedData } = this.props;
+
+        fetchAllData()
+        if(!pending && focusedData !== undefined){
+            fetchAircraftExtendedData(focusedData.callsign)
+        }
+    }
+
+    // This data isn't expected to change, ever, so it would be overkill to keep it in our redux store.
     fetchFIRData = async () => {
         let data = await fetch('https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/airspaces/zones/fir-list?api_key=04775150-c03c-11e9-ba38-ab1794fa7a73&format=json');
         data = await data.json();
@@ -119,7 +135,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    fetchAllData: fetchAllAircraftDataAction
+    fetchAllData: fetchAllAircraftDataAction,
+    fetchAircraftExtendedData,
 }
 
 export default connect(
