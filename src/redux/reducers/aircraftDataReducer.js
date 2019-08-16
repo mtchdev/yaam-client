@@ -13,7 +13,7 @@ const initalState = {
     pending: false, 
     focused: false,
     error: null,
-    allAircraft: []
+    allAircraft: {pilots: [], atc: []}
 }
 
 export default function(state = initalState, action) {
