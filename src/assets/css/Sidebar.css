@@ -5,7 +5,11 @@
     height: 94vh;
     padding: 20px;
     z-index: 1000;
-    text-align: center
+    text-align: center;
+}
+
+.sidebar.is-open {
+    margin-left: 0;
 }
 
 .mainDetailsFlex {
@@ -18,8 +22,12 @@
     padding: 10px
 }
 
-.mainDetailsFlex h4 {
+.mainDetailsFlex h2 {
     font-weight: bold;
+    margin-bottom: 0;
+}
+
+.mainDetailsFlex h5 {
     margin-bottom: 0;
 }
 
@@ -31,12 +39,23 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 1em;
 }
 
-.subdetailsFlex p, .subdetailsFlex img {
+.subdetailsFlex p {
     padding-left: 10px;
     padding-right: 10px;
     margin: 0
+}
+
+.logoAndCallsignWrapper {
+    text-align: left;
+}
+
+.logoAndCallsignWrapper h3 {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+    padding: 0;
 }
 
 .subdetailsFlex p {
