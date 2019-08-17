@@ -7,13 +7,8 @@ export default class TopBar extends Component {
     render() {
         return (
             <Navbar type="dark" theme="white" expand="md" style={style}>
-                <NavbarBrand style={{color: 'darkBlue'}}>Yet Another VATSIM Map</NavbarBrand>
+                <NavbarBrand style={{color: 'darkBlue'}}>Yet Another Airplane Map</NavbarBrand>
                 <Nav navbar>
-                    <NavItem>
-                        <NavLink active style={{color: 'darkBlue'}}>
-                            Main Page
-                        </NavLink>
-                    </NavItem>
                 </Nav>
             </Navbar>
         )

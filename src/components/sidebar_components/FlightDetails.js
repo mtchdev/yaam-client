@@ -26,8 +26,8 @@ export default class FlightHistory extends Component {
     const position = {lat, lng};
     
     const progress = calculateProgress(
-        {latitude: dep.lat, longitude: dep.lng},
-        {latitude: arr.lat, longitude: arr.lng},
+        {latitude: dep.lat, longitude: dep.long},
+        {latitude: arr.lat, longitude: arr.long},
         {latitude: position.lat, longitude: position.lng}
         );
 
@@ -38,8 +38,7 @@ export default class FlightHistory extends Component {
           <div className="mainDetailsFlex">
             <div>
               <h2>{dep.code.icao}</h2>
-              {/* <p>{dep.region.city}</p> */}
-              <p>City</p>
+              <p>{dep.region.city}</p>
             </div>
 
             <div>
@@ -48,8 +47,7 @@ export default class FlightHistory extends Component {
 
             <div>
               <h2>{arr.code.icao}</h2>
-              {/* <p>{arr.region.city}</p> */}
-              <p>City</p>
+              <p>{arr.region.city}</p>
             </div>
           </div>
           <Progress value={progress} />
