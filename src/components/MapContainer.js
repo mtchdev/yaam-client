@@ -1,21 +1,26 @@
 import React, { Component } from "react";
 import L from "leaflet";
-import { Map, TileLayer, Polyline } from "react-leaflet";
-import Marker from "./map_components/AircraftMarker";
-import AircraftTooltip from "./map_components/AircraftTooltip";
+import { Map, TileLayer } from "react-leaflet";
 import { connect } from "react-redux";
 import "../assets/css/tooltip.css";
 import fetchAllAircraftDataAction from "../lib/fetchAllAircraftData";
 import fetchAircraftExtendedData from "../lib/focusOnAircraft";
-// import { getAircraftError, getAircraftPending, getAircraft } from "../redux/reducers/aircraftFocus";
 import {
   getAllAircraftError,
   getAllAircraftPending,
   getAllAircraft
 } from "../redux/reducers/aircraftDataReducer";
-import { FIRPolygons } from "./map_components/FIRPolys";
+import FIRPolygons from "./map_components/FIRPolys";
+import AircraftMarkerManager from "./map_components/AircraftMarkerManager";
+import AircraftPath from "./map_components/AircraftPath";
 
 const DEFAULT_BOUNDS = L.latLngBounds(L.latLng(90, -180), L.latLng(-90, 180));
+const UPDATE_TIME = 30;
+
+const TILES = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+const ATTR ='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+const DEFAULT_CENTER = [30, 0];
+const DEFAULT_ZOOM_LEVEL = 3;
 
 class MapContainer extends Component {
   constructor(props) {
@@ -28,107 +33,70 @@ class MapContainer extends Component {
   }
 
   render() {
-    const tiles =
-      "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
-    const attr =
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
-    const mapCenter = [30, 0];
-    const zoomLevel = 3;
-    const defaultRotationAngle = 45;
-    const { bounds, FIRs } = this.state;
-    const { allAircraft, pending, focusedData } = this.props;
+
+    const { bounds } = this.state;
+    const { allAircraft, focusedData } = this.props;
     const { pilots, atc } = allAircraft;
 
-    // If an aircraft is focused, this will show the polyline
-    let polyline = null;
-    if (!pending && focusedData !== undefined) {
-      polyline = <Polyline positions={this.props.focusedData.trail} />;
-    }
+    const trail = focusedData != null ? focusedData.trail : null;
 
+    
     return (
       <Map
         ref="map"
         preferCanvas={true}
-        center={mapCenter}
+        center={DEFAULT_CENTER}
         maxBounds={DEFAULT_BOUNDS}
         maxBoundsViscosity={0.9}
-        zoom={zoomLevel}
-        minZoom={zoomLevel}
+        zoom={DEFAULT_ZOOM_LEVEL}
+        minZoom={DEFAULT_ZOOM_LEVEL}
         id="mapid"
         doubleClickZoom={false}
         style={{ height: "100%" }}
         zoomControl={false}
       >
-        <TileLayer attribution={attr} url={tiles} />
-        {pilots.map((flight, index) => {
-          let showTooltip = false;
-          if (
-            flight.coords.lat === null ||
-            flight.coords.long === null ||
-            flight.altitude < 2000 ||
-            !this.isInBounds(flight.coords, bounds)
-          ) {
-            return null;
-          }
-
-          if (flight.callsign === focusedData) {
-            showTooltip = true;
-          }
-          return (
-            <Marker
-              key={index}
-              callsign={flight.callsign}
-              position={[flight.coords.lat, flight.coords.long]}
-              rotationAngle={parseInt(flight.heading - defaultRotationAngle)}
-              icon={L.icon({ iconUrl: "airplane.png", iconAnchor: [16, 16] })}
-            >
-              <AircraftTooltip visible={showTooltip} data={flight} />
-            </Marker>
-          );
-        })}
-
-        {/* Render the path of the aircraft (if focused) and all the FIR polygons. */}
-        {FIRPolygons(FIRs, atc)}
-        {polyline}
+        <TileLayer attribution={ATTR} url={TILES} />
+          <AircraftMarkerManager pilots={pilots} bounds={bounds} />
+          <FIRPolygons atc={atc} />
+          <AircraftPath {...{trail}} />
       </Map>
     );
   }
 
   /*
         The map will rerender only if the bounds are changed or new data is loaded.
+        This includes the inital FIR load which is done AFTER mounting the component.
     */
   shouldComponentUpdate = (nextProps, nextState) => {
-    if (this.props.pending && !nextProps.pending) {
-      return true;
-    }
+    if ((this.props.pending && !nextProps.pending) ||
+        this.state.bounds !== nextState.bounds ||
+        this.props.allAircraft !== nextProps.allAircraft ||
+        this.state.FIRs !== nextState.FIRs ) return true;
 
-    if (this.state.bounds !== nextState.bounds) {
-      return true;
-    }
-
-    if (this.props.allAircraft !== nextProps.allAircraft) {
-      return true;
-    }
-    if (this.state.FIRs !== nextState.FIRs) {
-      return true;
-    }
     return false;
   };
 
   componentDidMount = () => {
     const { fetchAllData } = this.props;
-    fetchAllData();
-    this.fetchFIRData();
+    const { addBoundsChangeListener } = this;
 
+    fetchAllData();
+
+    addBoundsChangeListener();
+
+    setInterval(this.updateData, UPDATE_TIME * 1000);
+  };
+
+  // Adds leaflet listener that updates the bounds in our state.
+  addBoundsChangeListener = () => {
     this.refs.map.leafletElement.on("moveend", e => {
       const map = e.target;
       const bounds = map.getBounds();
       this.setState({ bounds });
     });
+  }
 
-    setInterval(this.updateData, 30 * 1000);
-  };
-
+  // Dispatches all redux data-fetching actions.
   updateData = () => {
     const {
       fetchAllData,
@@ -142,31 +110,14 @@ class MapContainer extends Component {
       fetchAircraftExtendedData(focusedData.callsign);
     }
   };
-
-  // This data isn't expected to change, ever, so it would be overkill to keep it in our redux store.
-  fetchFIRData = async () => {
-    let data = await fetch(
-      "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/airspaces/zones/fir-list?api_key=04775150-c03c-11e9-ba38-ab1794fa7a73&format=json"
-    );
-    data = await data.json();
-    this.setState({ FIRs: data });
-  };
-
-  isInBounds = (coords, bounds) => {
-    return (
-      coords.lat > bounds.getSouth() &&
-      coords.lat < bounds.getNorth() &&
-      coords.long > bounds.getWest() &&
-      coords.long < bounds.getEast()
-    );
-  };
 }
 
 const mapStateToProps = state => ({
   error: getAllAircraftError(state),
   allAircraft: getAllAircraft(state),
   pending: getAllAircraftPending(state),
-  focusedData: state.focusedData
+  focusedData: state.focusedData,
+  focused: state.focused
 });
 
 const mapDispatchToProps = {

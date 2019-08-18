@@ -19,5 +19,7 @@ export default class TopBar extends Component {
 const style = {
     paddingBottom: 0,
     paddingTop: 0,
-    height: '6vh'
+    height: '6vh',
+    boxShadow: '10px 0px 10px 0px rgba(0,0,0,0.1)',
+    zIndex: 12000,
 }

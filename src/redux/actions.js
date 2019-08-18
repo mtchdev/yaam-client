@@ -9,6 +9,8 @@ import {
     UNFOCUS_AIRCRAFT
  } from "./actionTypes";
 
+
+ // Usually called from aircraft marker
 export const focusAircraft = () => ({
     type: FOCUS_AIRCRAFT,
 })

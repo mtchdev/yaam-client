@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Tooltip } from "react-leaflet";
-import {Container, Row, Col} from "shards-react";
 
 export default class AircraftTooltip extends Component {
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
-import { Card, CardHeader, CardBody, CardFooter } from "shards-react";
+import { Card, CardHeader, CardBody } from "shards-react";
 export default class FlightHistory extends Component {
   render() {
     const datasets = this.convertTrailToDataset(this.props.data);

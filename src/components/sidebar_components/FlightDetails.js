@@ -3,9 +3,7 @@ import { getDistance } from 'geolib';
 import { FaArrowCircleRight } from "react-icons/fa";
 import {
   Card,
-  CardHeader,
   CardBody,
-  CardFooter,
   Progress,
   Badge
 } from "shards-react";

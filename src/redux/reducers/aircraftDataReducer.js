@@ -45,7 +45,8 @@ export default function(state = initalState, action) {
             return {
                 ...state, 
                 pending: false,
-                error: action.error
+                error: action.error,
+                focusedData: null
             }
         case FETCH_ALL_AIRCRAFT_PENDING:
             return {
