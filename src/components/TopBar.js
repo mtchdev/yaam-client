@@ -15,7 +15,6 @@ export default class TopBar extends Component {
     }
 }
 
-
 const style = {
     paddingBottom: 0,
     paddingTop: 0,
