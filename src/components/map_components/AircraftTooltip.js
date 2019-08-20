@@ -4,15 +4,19 @@ import { Tooltip } from "react-leaflet";
 export default class AircraftTooltip extends Component {
 
     getLogoFromCallsign = (callsign) => {
-
-        const airlineCode = callsign.substr(0, 3);
-        const url = `https://planefinder.net/flightstat/v2/getLogo3x.php?airlineCode=${airlineCode}&requestThumb=1`
-        return (
-            <div style={{paddingRight: 10, width: '6em'}}>
-                <img style={{maxWidth: '100%', height: 'auto'}} src={url} alt={""}/>
-            </div>
-        );
+        if (isAirline(callsign)){
+            const airlineCode = callsign.substr(0, 3);
+            const url = `https://planefinder.net/flightstat/v2/getLogo3x.php?airlineCode=${airlineCode}&requestThumb=1`
+            return (
+                <div style={{paddingRight: 10, width: '6em'}}>
+                    <img style={{maxWidth: '100%', height: 'auto'}} src={url} alt={""}/>
+                </div>
+            );
+        }
+        return null;
     }
+
+    
 
     
     render() {
@@ -33,4 +37,9 @@ export default class AircraftTooltip extends Component {
             </div>
         )
     }
+}
+
+const isAirline = (callsign) => {
+    if(callsign.match(/[A-Z]{3}\d.*/g) !== null) return true;
+    return false;
 }

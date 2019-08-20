@@ -27,7 +27,8 @@ export default function(state = initalState, action) {
         case UNFOCUS_AIRCRAFT:
             return {
                 ...state,
-                focused: false
+                focused: false,
+                focusedData: null,
             }
         case FETCH_AIRCRAFT_PENDING:
             return {

@@ -6,7 +6,7 @@ import '../assets/css/Sidebar.css'
 
 class Sidebar extends Component {
     render() {
-        if(this.props.focused) {
+        if(this.props.focused && this.props.focusedData != null) {
             return(
                 <div className={"sidebar"}>
                     <Details data={this.props.focusedData} />

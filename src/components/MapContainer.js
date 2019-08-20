@@ -31,12 +31,13 @@ class MapContainer extends Component {
     this.state = {
       data: [],
       FIRs: null,
-      bounds: L.latLngBounds(L.latLng(90, -180), L.latLng(-90, 180))
+      bounds: L.latLngBounds(L.latLng(90, -180), L.latLng(-90, 180)),
+      zoom: DEFAULT_ZOOM_LEVEL,
     };
   }
 
   render() {
-    const { bounds } = this.state;
+    const { bounds, zoom } = this.state;
     const { allAircraft, focusedData } = this.props;
     const { pilots, atc } = allAircraft;
 
@@ -45,7 +46,6 @@ class MapContainer extends Component {
     return (
       <Map
         ref="map"
-        preferCanvas={true}
         center={DEFAULT_CENTER}
         maxBounds={DEFAULT_BOUNDS}
         maxBoundsViscosity={0.9}
@@ -57,7 +57,7 @@ class MapContainer extends Component {
         zoomControl={false}
       >
         <TileLayer attribution={ATTR} url={TILES} />
-        <AircraftMarkerManager pilots={pilots} bounds={bounds} />
+        <AircraftMarkerManager pilots={pilots} bounds={bounds} zoom={zoom} />
         <FIRPolygons atc={atc} />
         <AircraftPath {...{ trail }} />
       </Map>
@@ -71,7 +71,8 @@ class MapContainer extends Component {
     if (
       (this.props.pending && !nextProps.pending) ||
       this.state.bounds !== nextState.bounds ||
-      this.props.allAircraft !== nextProps.allAircraft
+      this.props.allAircraft !== nextProps.allAircraft ||
+      this.props.focused !== nextProps.focused
     )
       return true;
     return false;
@@ -92,8 +93,9 @@ class MapContainer extends Component {
   addBoundsChangeListener = () => {
     this.refs.map.leafletElement.on("moveend", e => {
       const map = e.target;
+      const zoom = map.getZoom();
       const bounds = map.getBounds();
-      this.setState({ bounds });
+      this.setState({ bounds, zoom });
     });
   };
 
@@ -107,7 +109,7 @@ class MapContainer extends Component {
     } = this.props;
 
     fetchAllData();
-    if (!pending && focusedData !== undefined) {
+    if (!pending && focusedData != null) {
       fetchAircraftExtendedData(focusedData.callsign);
     }
   };
@@ -130,3 +132,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(MapContainer);
+

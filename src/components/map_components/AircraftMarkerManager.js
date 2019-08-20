@@ -3,11 +3,13 @@ import L from "leaflet";
 import Marker from "./AircraftMarker";
 import AircraftTooltip from "./AircraftTooltip";
 
-const defaultRotationAngle = 45;
+const defaultRotationAngle = 0;
 
 export default class AircraftMarkerManager extends Component {
   render() {
-    const { pilots, bounds, focusedData } = this.props;
+    const { pilots, bounds, focusedData, zoom } = this.props;
+    const iconSize = zoom+19;
+    
     return pilots.map((flight, index) => {
       let showTooltip = false;
       if (
@@ -28,7 +30,7 @@ export default class AircraftMarkerManager extends Component {
           callsign={flight.callsign}
           position={[flight.coords.lat, flight.coords.long]}
           rotationAngle={parseInt(flight.heading - defaultRotationAngle)}
-          icon={L.icon({ iconUrl: "airplane.png", iconAnchor: [16, 16] })}
+          icon={L.icon({ iconUrl: "airplane.png", iconAnchor: [iconSize/2, iconSize/2], iconSize: [iconSize, iconSize] })}
         >
           <AircraftTooltip key={index} visible={showTooltip} data={flight} />
         </Marker>
