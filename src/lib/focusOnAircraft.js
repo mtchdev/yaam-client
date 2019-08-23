@@ -4,7 +4,7 @@ const fetchAircraftData = (callsign) => {
     return async dispatch => {
         dispatch(fetchAircraftPending(callsign));
         try {
-            let res = await fetch(`http://localhost:5000/api/data/${callsign}`)
+            let res = await fetch(`${process.env.REACT_APP_API_ADDR}/data/${callsign}`)
             res = await res.json();
             dispatch(fetchAircraftSuccess(res));
             dispatch(focusAircraft())

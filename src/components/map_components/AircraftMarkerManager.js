@@ -30,7 +30,7 @@ export default class AircraftMarkerManager extends Component {
           callsign={flight.callsign}
           position={[flight.coords.lat, flight.coords.long]}
           rotationAngle={parseInt(flight.heading - defaultRotationAngle)}
-          icon={L.icon({ iconUrl: "airplane.png", iconAnchor: [iconSize/2, iconSize/2], iconSize: [iconSize, iconSize] })}
+          icon={L.icon({ iconUrl: "airplane_light.png", iconAnchor: [iconSize/2, iconSize/2], iconSize: [iconSize, iconSize] })}
         >
           <AircraftTooltip key={index} visible={showTooltip} data={flight} />
         </Marker>

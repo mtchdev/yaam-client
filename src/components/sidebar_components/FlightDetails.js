@@ -13,11 +13,11 @@ export default class FlightHistory extends Component {
     const {
       callsign,
       airline,
-      pilotName,
       aircraft,
       dep,
       arr,
-      trail
+      trail,
+      name
     } = this.props.data;
 
     const { alt, spd, hd, lat, lng } = trail[0];
@@ -86,8 +86,7 @@ export default class FlightHistory extends Component {
           <div className={"subdetailsFlex"}>
             <div>
               <p style={{ fontSize: 14 }}>PILOT</p>
-              {/* <p style={{color: 'gray'}}>{pilotName}</p> */}
-              <p style={{ color: "gray" }}>John Doe</p>
+              <p style={{color: 'gray'}}>{name}</p>
             </div>
             <div>
               <p style={{ fontSize: 14 }}>FIELD 5</p>
