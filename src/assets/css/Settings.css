@@ -1,0 +1,69 @@
+.settingsContainer {
+    position: absolute;
+    top: 2vh;
+    right: 2vw;
+    z-index: 12000;
+    width: 3vw;
+    -webkit-transition: width 0.1s ease-out; /* For Safari 3.1 to 6.0 */
+    transition: width 0.1s ease-out;
+}
+.settingsContainer div {
+    position: absolute;
+    opacity: 0;
+    -webkit-transition: opacity 0.1s ease-out; /* For Safari 3.1 to 6.0 */
+    transition: opacity 0.1s ease-out;
+}
+
+.settingsContainerOpen {
+    width: 20vw;
+}
+
+.settingsContainerOpen div {
+    opacity: 1;
+    position: static;
+}
+
+
+/* Button */
+.settingsButton {
+    padding: 5px;
+    width: 100%;
+}
+
+.settingsButtonOpen {
+    display:  flex;
+    border-bottom-left-radius: 0%;
+    border-bottom-right-radius: 0%;
+}
+
+.settingsButtonOpen svg {
+    position: absolute;
+    opacity: 0;
+}
+
+
+.settingsButtonOpen div {
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    display: block;
+}
+
+.settingsButtonOpen p {
+    font-size: 18px;
+    padding: 0px;
+    margin: 0px;
+}
+
+/* Card */
+
+.settingsCard {
+    border-top-left-radius: 0%;
+    border-top-right-radius: 0%;
+    padding: 1rem;
+}
+
+.settingsCardOpen {
+    display: block;
+}

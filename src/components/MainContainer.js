@@ -4,6 +4,7 @@ import { Container, Row, Col } from "shards-react";
 import Sidebar from "../components/Sidebar";
 import TopBar from "../components/TopBar";
 import MapContainer from './MapContainer';
+import SettingsButton from "./SettingsButton";
 
 class MainContainer extends Component {
     render() {
@@ -17,6 +18,7 @@ class MainContainer extends Component {
                 <Sidebar/>
                 <Row noGutters style={{height: '94vh'}}>  
                     <Col>
+                        <SettingsButton />
                         <MapContainer />
                     </Col>
                 </Row>
