@@ -9,7 +9,7 @@ import {
   getAllAircraftError,
   getAllAircraftPending,
   getAllAircraft
-} from "../redux/reducers/aircraftDataReducer";
+} from "../redux/reducers/rootReducer";
 import FIRPolygons from "./map_components/FIRPolys";
 import AircraftMarkerManager from "./map_components/AircraftMarkerManager";
 import AircraftPath from "./map_components/AircraftPath";
@@ -38,7 +38,7 @@ class MapContainer extends Component {
 
   render() {
     const { bounds, zoom } = this.state;
-    const { allAircraft, focusedData } = this.props;
+    const { allAircraft, focusedData, settings } = this.props;
     const { pilots, atc } = allAircraft;
 
     const trail = focusedData != null ? focusedData.trail : null;
@@ -57,8 +57,8 @@ class MapContainer extends Component {
         zoomControl={false}
       >
         <TileLayer attribution={ATTR} url={TILES} />
-        <AircraftMarkerManager pilots={pilots} bounds={bounds} zoom={zoom} />
-        <FIRPolygons atc={atc} />
+        <AircraftMarkerManager focusedData={focusedData} pilots={pilots} bounds={bounds} zoom={zoom} alwaysShowTooltip={true} />
+        <FIRPolygons atc={atc} show={settings.toggleFIRs}/>
         <AircraftPath {...{ trail }} />
       </Map>
     );
@@ -71,8 +71,7 @@ class MapContainer extends Component {
     if (
       (this.props.pending && !nextProps.pending) ||
       this.state.bounds !== nextState.bounds ||
-      this.props.allAircraft !== nextProps.allAircraft ||
-      this.props.focused !== nextProps.focused
+      this.props.settings !== nextProps.settings
     )
       return true;
     return false;
@@ -120,7 +119,8 @@ const mapStateToProps = state => ({
   allAircraft: getAllAircraft(state),
   pending: getAllAircraftPending(state),
   focusedData: state.focusedData,
-  focused: state.focused
+  focused: state.focused,
+  settings: state.settings
 });
 
 const mapDispatchToProps = {

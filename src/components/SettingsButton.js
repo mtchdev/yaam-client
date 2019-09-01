@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import { Button, Card, Form, FormGroup } from "shards-react";
 import { FaCog } from "react-icons/fa";
-import { CSSTransition } from "react-transition-group";
+import { connect } from 'react-redux'
 import Switch from "react-switch";
 import "../assets/css/Settings.css"
+import { toggleFIRs } from "../redux/settingsActions";
 
-export default class SettingsButton extends Component {
+class SettingsButton extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
              containerOpen: false,
              settings: {
-                 switch1: false,
+                 showFIRs: false,
              }
         }
     }
@@ -44,6 +45,12 @@ export default class SettingsButton extends Component {
                         <Switch onChange={this.handleSwitch1} checked={this.state.settings.switch1} {...switchStyle}/>
                     </div>
                     </FormGroup>
+                    <FormGroup style={{display: "flex", justifyContent: "space-between"}}>
+                    <label htmlFor="enableFIRs">Show FIRs</label>
+                    <div id="enableFIRs">
+                        <Switch onChange={(sw) => this.props.toggleFIRs(sw)} checked={this.props.showFIRs} {...switchStyle}/>
+                    </div>
+                    </FormGroup>
                 </Form>
             </Card>
           </div>
@@ -66,3 +73,17 @@ const switchStyle = {
     height: 20,
     width: 48,
 }
+
+const mapStateToProps = (state) => ({
+  showFIRs: state.settings.toggleFIRs
+})
+
+const mapDispatchToProps = {
+  toggleFIRs
+}
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SettingsButton)

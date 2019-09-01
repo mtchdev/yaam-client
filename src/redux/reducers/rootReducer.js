@@ -9,14 +9,30 @@ import {
     UNFOCUS_AIRCRAFT
  } from "../actionTypes";
 
+ import settingsReducer from "./settingsReducer";
+
+function combineReducersWithRoot(rootReducer, reducers) {
+    return (state, action) => {
+      // Ensure the root state object is a new object; otherwise
+      // React may not re-render.
+      let newState = {...rootReducer(state, action)};
+      Object.keys(reducers).forEach(domain => {
+        let obj = state ? state[domain] : undefined;
+        newState[domain] = reducers[domain](obj, action);
+      });
+      return newState;
+    };
+  }
+
 const initalState = {
+    settings: {},
     pending: false, 
     focused: false,
     error: null,
     allAircraft: {pilots: [], atc: []}
 }
 
-export default function(state = initalState, action) {
+function rootReducer(state = initalState, action) {
     switch(action.type) {
         // TODO: Look into getting rid of this, since we can use the focused aircraft data instead of dispatching twice...
         case FOCUS_AIRCRAFT:
@@ -70,6 +86,8 @@ export default function(state = initalState, action) {
             return state;
     }
 }
+
+export default combineReducersWithRoot(rootReducer, {settings: settingsReducer})
 
 export const getAircraft = state => state.aircraftFocused;
 export const getAircraftPending = state => state.pending;

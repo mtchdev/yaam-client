@@ -10,11 +10,10 @@ export default class FIRPolys extends Component {
   }
 
   render() {
-    const { atc } = this.props;
+    const { atc, show } = this.props;
     const { data } = this.state;
     const FIRs = this.matchControllersToPolygons(data, atc);
-
-    if (FIRs == null) return null;
+    if (FIRs == null || show === false) return null;
     return FIRs;
   }
 
