@@ -104,7 +104,8 @@ export default class FlightHistory extends Component {
 }
 
 const calculateProgress = (depCoords, arrCoords, position) => {
-    if (depCoords.latitude === null || depCoords.longitude === null){ return 0}
+    if (depCoords.latitude == null || depCoords.longitude == null ||
+        arrCoords.latitude == null || arrCoords.longitude == null){ return 0}
     const dist = getDistance(depCoords, arrCoords);
     const distLeft = getDistance(arrCoords, position);
     return Math.floor((dist-distLeft)/dist*100);

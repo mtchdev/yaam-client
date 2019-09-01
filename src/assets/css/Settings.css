@@ -3,7 +3,7 @@
     top: 2vh;
     right: 2vw;
     z-index: 12000;
-    width: 3vw;
+    width: 3rem;
     -webkit-transition: width 0.1s ease-out; /* For Safari 3.1 to 6.0 */
     transition: width 0.1s ease-out;
 }
@@ -15,7 +15,7 @@
 }
 
 .settingsContainerOpen {
-    width: 20vw;
+    width: 20rem;
 }
 
 .settingsContainerOpen div {
