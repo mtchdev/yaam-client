@@ -12,14 +12,14 @@ class MainContainer extends Component {
             <Container fluid style={{padding: 0, height: '100vh'}}>
                 <Row noGutters>
                     <Col md="12">
-                        <TopBar height="5vh"></TopBar>
+                        <TopBar theme={this.props.themeColors} height="5vh"></TopBar>
                     </Col>
                 </Row>
-                <Sidebar/>
-                <Row noGutters style={{height: '94vh'}}>  
+                <Sidebar theme={this.props.themeColors} />
+                <Row noGutters theme={this.props.themeColors} style={{height: '94vh'}}>  
                     <Col>
-                        <SettingsButton />
-                        <MapContainer />
+                        <SettingsButton theme={this.props.themeColors} />
+                        <MapContainer theme={this.props.themeColors} />
                     </Col>
                 </Row>
             </Container>
@@ -28,7 +28,7 @@ class MainContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    
+    themeColors: state.settings.themeColors
 })
 
 const mapDispatchToProps = {

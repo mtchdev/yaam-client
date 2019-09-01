@@ -4,7 +4,7 @@ import { FaCog } from "react-icons/fa";
 import { connect } from 'react-redux'
 import Switch from "react-switch";
 import "../assets/css/Settings.css"
-import { toggleFIRs } from "../redux/settingsActions";
+import { toggleFIRs, toggleColorMode } from "../redux/settingsActions";
 
 class SettingsButton extends Component {
     constructor(props) {
@@ -12,9 +12,6 @@ class SettingsButton extends Component {
     
         this.state = {
              containerOpen: false,
-             settings: {
-                 showFIRs: false,
-             }
         }
     }
 
@@ -29,20 +26,22 @@ class SettingsButton extends Component {
           cardClasses.push('settingsCardOpen')
         }
 
+        const { theme } = this.props
+
         return (
           <div className={containerClasses.join(" ")}>
-            <Button className={buttonClasses.join(" ")} onClick={() => this.setState({ containerOpen: !this.state.containerOpen })}>
+            <Button style={{backgroundColor: theme.accent, borderColor: theme.accent}} className={buttonClasses.join(" ")} onClick={() => this.setState({ containerOpen: !this.state.containerOpen })}>
               <FaCog fontSize={22} />
               <div>
                 <p>Settings</p>
               </div>
             </Button>
-            <Card className={cardClasses.join(' ')}>
+            <Card style={{backgroundColor: theme.primary, color: theme.textPrimary}} className={cardClasses.join(' ')}>
                 <Form>
                     <FormGroup style={{display: "flex", justifyContent: "space-between"}}>
-                    <label htmlFor="switch1">Night Mode</label>
-                    <div id="switch1">
-                        <Switch onChange={this.handleSwitch1} checked={this.state.settings.switch1} {...switchStyle}/>
+                    <label htmlFor="toggleColorMode">Night Mode</label>
+                    <div id="toggleColorMode">
+                        <Switch onChange={() => this.props.toggleColorMode()} checked={this.props.isDarkMode} {...switchStyle}/>
                     </div>
                     </FormGroup>
                     <FormGroup style={{display: "flex", justifyContent: "space-between"}}>
@@ -75,11 +74,13 @@ const switchStyle = {
 }
 
 const mapStateToProps = (state) => ({
-  showFIRs: state.settings.toggleFIRs
+  showFIRs: state.settings.toggleFIRs,
+  isDarkMode: state.settings.isDarkMode
 })
 
 const mapDispatchToProps = {
-  toggleFIRs
+  toggleFIRs,
+  toggleColorMode
 }
 
 

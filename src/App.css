@@ -2,3 +2,13 @@
   margin: 0;
   padding: 0;
 }
+
+.darkPrimary {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.darkSecondary {
+  background-color: #262626;
+  color: white;
+}

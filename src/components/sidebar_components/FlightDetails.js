@@ -29,22 +29,23 @@ export default class FlightHistory extends Component {
         {latitude: position.lat, longitude: position.lng}
         );
 
+    const { theme } = this.props
 
     return (
-      <Card className={"sidebar-flightdetails"}>
+      <Card className={"sidebar-flightdetails"} style={{backgroundColor: theme.primary, color: theme.textPrimary}}>
         <CardBody>
           <div className="mainDetailsFlex">
             <div>
-              <h2>{dep.code.icao}</h2>
+              <h2 style={{color: theme.textPrimary}}>{dep.code.icao}</h2>
               <p>{dep.region.city}</p>
             </div>
 
             <div>
-              <h5><FaArrowCircleRight /></h5>
+              <h5 style={{color: theme.textPrimary}}><FaArrowCircleRight /></h5>
             </div>
 
             <div>
-              <h2>{arr.code.icao}</h2>
+              <h2 style={{color: theme.textPrimary}}>{arr.code.icao}</h2>
               <p>{arr.region.city}</p>
             </div>
           </div>
@@ -61,7 +62,7 @@ export default class FlightHistory extends Component {
                   alt={""}
                 />
               </div>
-              <h3>{callsign}</h3>
+              <h3 style={{color: theme.textPrimary}}>{callsign}</h3>
             </div>
             <div>
               <p style={{ fontSize: 14 }}>AIRCRAFT TYPE</p>

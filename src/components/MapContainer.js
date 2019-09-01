@@ -19,7 +19,8 @@ import AircraftPath from "./map_components/AircraftPath";
 const DEFAULT_BOUNDS = L.latLngBounds(L.latLng(90, -180), L.latLng(-90, 180));
 const UPDATE_TIME = 30;
 
-const TILES = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+const LIGHT_TILES = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+const DARK_TILES = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
 const ATTR =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 const DEFAULT_CENTER = [30, 0];
@@ -38,11 +39,11 @@ class MapContainer extends Component {
 
   render() {
     const { bounds, zoom } = this.state;
-    const { allAircraft, focusedData, settings } = this.props;
+    const { allAircraft, focusedData, settings} = this.props;
     const { pilots, atc } = allAircraft;
 
     const trail = focusedData != null ? focusedData.trail : null;
-
+    const tiles = settings.isDarkMode ? DARK_TILES : LIGHT_TILES;
     return (
       <Map
         ref="map"
@@ -56,8 +57,8 @@ class MapContainer extends Component {
         style={{ height: "100%" }}
         zoomControl={false}
       >
-        <TileLayer attribution={ATTR} url={TILES} />
-        <AircraftMarkerManager focusedData={focusedData} pilots={pilots} bounds={bounds} zoom={zoom} alwaysShowTooltip={true} />
+        <TileLayer attribution={ATTR} url={tiles} />
+        <AircraftMarkerManager isDarkMode={settings.isDarkMode} focusedData={focusedData} pilots={pilots} bounds={bounds} zoom={zoom} alwaysShowTooltip={true} />
         <FIRPolygons atc={atc} show={settings.toggleFIRs}/>
         <AircraftPath {...{ trail }} />
       </Map>

@@ -13,6 +13,7 @@ export default class AircraftMarkerManager extends Component {
     
     let alwaysShowToolTip = true;
     
+    const iconUrl = this.props.isDarkMode ? "airplane_dark.png" :  "airplane_light.png";
 
     return pilots.map((flight, index) => {
       let showTooltip = false;
@@ -29,7 +30,7 @@ export default class AircraftMarkerManager extends Component {
             callsign={flight.callsign}
             position={[flight.coords.lat, flight.coords.long]}
             rotationAngle={parseInt(flight.heading - defaultRotationAngle)}
-            icon={L.icon({ iconUrl: "airplane_light.png", iconAnchor: [iconSize/2, iconSize/2], iconSize: [iconSize, iconSize] })}
+            icon={L.icon({ iconUrl, iconAnchor: [iconSize/2, iconSize/2], iconSize: [iconSize, iconSize] })}
           >
             <AircraftTooltip key={index} visible={showTooltip} data={flight} />
           </Marker>

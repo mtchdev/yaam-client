@@ -77,9 +77,11 @@ export default class FlightHistory extends Component {
       }
     };
 
+    const { theme } = this.props;
+
     return (
-      <Card>
-        <CardHeader><h5 style={{margin: 0}}>Flight History</h5></CardHeader>
+      <Card style={{backgroundColor: theme.primary, color: theme.textPrimary}} >
+        <CardHeader><h5 style={{margin: 0, color: theme.textPrimary}}>Flight History</h5></CardHeader>
         <CardBody style={{padding: 0, paddingBottom: '15px', paddingTop: '15px'}}>
           <div>
             <Line data={rootData} options={options} />
