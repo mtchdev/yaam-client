@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { getDistance } from 'geolib';
-import { FaArrowCircleRight } from "react-icons/fa";
+import { FaArrowCircleRight, FaPlaneArrival, FaPlaneDeparture, FaPlane } from "react-icons/fa";
 import {
   Card,
   CardBody,
   Progress,
   Badge
 } from "shards-react";
+
+const ON_GROUND_MAX_SPEED = 50;
 
 export default class FlightHistory extends Component {
   render() {
@@ -49,7 +51,9 @@ export default class FlightHistory extends Component {
               <p>{arr.region.city}</p>
             </div>
           </div>
-          <Progress value={progress} />
+          {progress > 0 &&
+            <Progress value={progress} />
+          }
           <hr />
           <div className={"subdetailsFlex"}>
             <div className="logoAndCallsignWrapper">
@@ -106,8 +110,22 @@ export default class FlightHistory extends Component {
 
 const calculateProgress = (depCoords, arrCoords, position) => {
     if (depCoords.latitude == null || depCoords.longitude == null ||
-        arrCoords.latitude == null || arrCoords.longitude == null){ return 0}
+        arrCoords.latitude == null || arrCoords.longitude == null) return 0;
     const dist = getDistance(depCoords, arrCoords);
     const distLeft = getDistance(arrCoords, position);
     return Math.floor((dist-distLeft)/dist*100);
 }
+
+// const calculateStatus = (flight, progress, dep, arr) => {
+//   if(flight.speed < ON_GROUND_MAX_SPEED && progress < 10) {
+//     return STATUS.TAXIING
+//   } else if ()
+// }
+
+// const STATUS = {
+//   TAXIING: 1,
+//   DEPARTING: 2,
+//   ENROUTE: 3,
+//   APPOROACH: 4,
+//   ARRIVED: 5
+// }

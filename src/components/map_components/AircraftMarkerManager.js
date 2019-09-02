@@ -4,6 +4,8 @@ import Marker from "./AircraftMarker";
 import AircraftTooltip from "./AircraftTooltip";
 
 const defaultRotationAngle = 0;
+const SHOW_GROUND_ZOOM_LEVEL = 10;
+const ON_GROUND_MAX_SPEED = 50;
 
 export default class AircraftMarkerManager extends Component {
   render() {
@@ -17,7 +19,7 @@ export default class AircraftMarkerManager extends Component {
 
     return pilots.map((flight, index) => {
       let showTooltip = false;
-      if(this.shouldRender(flight, bounds)){
+      if(this.shouldRender(flight, bounds, zoom)){
         if (focusedData) {
           if (flight.callsign === focusedData.callsign) {
             showTooltip = true;
@@ -32,17 +34,17 @@ export default class AircraftMarkerManager extends Component {
             rotationAngle={parseInt(flight.heading - defaultRotationAngle)}
             icon={L.icon({ iconUrl, iconAnchor: [iconSize/2, iconSize/2], iconSize: [iconSize, iconSize] })}
           >
-            <AircraftTooltip key={index} visible={showTooltip} data={flight} />
+            <AircraftTooltip key={index} theme={this.props.theme} visible={showTooltip} data={flight} />
           </Marker>
         );
       }
     });
   }
   
-  shouldRender(flight, bounds) {
-    if (!this.isInBounds(flight.coords, bounds) ||
-        flight.altitude < 2000) return false;
-    return true;
+  shouldRender(flight, bounds, zoom) {
+    if (this.isInBounds(flight.coords, bounds) && flight.speed > ON_GROUND_MAX_SPEED) return true;
+    if (this.isInBounds(flight.coords, bounds) && zoom > SHOW_GROUND_ZOOM_LEVEL) return true;
+    return false;
   }
 
   // Checks if given coordinates are in given bounds

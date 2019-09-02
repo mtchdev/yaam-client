@@ -58,7 +58,7 @@ class MapContainer extends Component {
         zoomControl={false}
       >
         <TileLayer attribution={ATTR} url={tiles} />
-        <AircraftMarkerManager isDarkMode={settings.isDarkMode} focusedData={focusedData} pilots={pilots} bounds={bounds} zoom={zoom} alwaysShowTooltip={true} />
+        <AircraftMarkerManager isDarkMode={settings.isDarkMode} theme={settings.themeColors} focusedData={focusedData} pilots={pilots} bounds={bounds} zoom={zoom} alwaysShowTooltip={true} />
         <FIRPolygons atc={atc} show={settings.toggleFIRs}/>
         <AircraftPath {...{ trail }} />
       </Map>

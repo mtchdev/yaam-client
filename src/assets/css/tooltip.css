@@ -5,6 +5,6 @@
     border: none !important;
 } */
 .leaflet-tooltip {
-    border-radius: 3;
+    border: none;
     padding: 0;
 }

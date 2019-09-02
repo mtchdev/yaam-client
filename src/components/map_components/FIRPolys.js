@@ -21,6 +21,8 @@ export default class FIRPolys extends Component {
     this.fetchFIRData();
   };
 
+  componentDidUpdate 
+
   // Match to correct polygon. Builds the polygon list.
   matchControllersToPolygons = (data, atc) => {
     // Simulate online stations for tests here:
@@ -35,13 +37,6 @@ export default class FIRPolys extends Component {
           return;
         }
 
-        /* For some fucking reason, ICAO data comes like this: long, lat.
-              Leaflet (and pretty much any sane person) accepts coords as 'lat, long'... */
-        let list = coordsList[0];
-        list.forEach(element => {
-          element = element.reverse();
-        });
-
         let fill = false;
         let weight = 0.5;
         const netName = this.nameOnNetwork(code);
@@ -50,6 +45,7 @@ export default class FIRPolys extends Component {
           const subLen = netName.length;
 
           if (station.callsign.substr(0, subLen) === netName) {
+            
             fill = true;
             weight = 2;
           }
@@ -58,7 +54,7 @@ export default class FIRPolys extends Component {
         polys.push(
           <Polygon
             key={index}
-            // onClick={() => console.log(`${code}: ${name}`)}
+            onClick={() => console.log(`${code}: ${name}`)}
             weight={weight}
             dashArray="5"
             positions={coordsList}
@@ -92,6 +88,18 @@ export default class FIRPolys extends Component {
         "https://v4p4sz5ijk.execute-api.us-east-1.amazonaws.com/anbdata/airspaces/zones/fir-list?api_key=04775150-c03c-11e9-ba38-ab1794fa7a73&format=json"
       );
       data = await data.json();
+
+      data.forEach((sector) => {
+        const { coordinates: coordsList } = sector.geometry;
+
+        /* For some reason, ICAO data comes like this: long, lat.
+              Leaflet (and pretty much any sane person) accepts coords as 'lat, long'... */
+        let list = coordsList[0];
+        list.forEach(element => {
+          element = element.reverse();
+        });
+      });
+
       this.setState({ data });
     } catch (error) {
       console.log(error);

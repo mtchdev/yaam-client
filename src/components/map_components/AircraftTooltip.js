@@ -21,20 +21,19 @@ export default class AircraftTooltip extends Component {
     
     render() {
         const { callsign, dep, arr, aircraft, visible } = this.props.data;
+        const { theme } = this.props;
         return (
-            <div>
-                <Tooltip permanent={visible} offset={[0, -10]} direction={"top"} >
-                    <div style={{padding: 5}}>
-                        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                                {this.getLogoFromCallsign(callsign)}
-                                <div>
-                                    <p style={{margin: 0, fontWeight: 'bold'}}>{callsign}</p>
-                                    <p style={{margin: 0, color: 'gray'}}>{dep.code.icao} - {arr.code.icao}</p>
-                                </div>
-                        </div>
+            <Tooltip permanent={visible} offset={[0, -10]} direction={"top"} style={{border: "none"}}>
+                <div style={{padding: 5, backgroundColor: theme.primary, borderColor: theme.primary, color: theme.textPrimary}}>
+                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                            {this.getLogoFromCallsign(callsign)}
+                            <div>
+                                <p style={{margin: 0, fontWeight: 'bold'}}>{callsign}</p>
+                                <p style={{margin: 0, color: 'gray'}}>{dep.code.icao} - {arr.code.icao}</p>
+                            </div>
                     </div>
-                </Tooltip>
-            </div>
+                </div>
+            </Tooltip>
         )
     }
 }
