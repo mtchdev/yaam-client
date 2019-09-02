@@ -43,7 +43,7 @@ export default class FlightHistory extends Component {
             </div>
 
             <div>
-              <h5 style={{color: theme.textPrimary}}><FaArrowCircleRight /></h5>
+              <h5 style={{color: theme.textPrimary}}><FaPlane /></h5>
             </div>
 
             <div>
