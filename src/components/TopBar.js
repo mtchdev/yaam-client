@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Navbar, NavbarBrand, NavItem, Nav, NavLink } from "shards-react";
+import Search from "./Search";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css"
 
@@ -9,7 +10,8 @@ export default class TopBar extends Component {
         return (
             <Navbar expand="md" style={{...style, backgroundColor: theme.primary}}>
                 <NavbarBrand style={{color: theme.textPrimary}}>Yet Another Airplane Map</NavbarBrand>
-                <Nav navbar>
+                <Nav navbar className="ml-auto">
+                    <Search />
                 </Nav>
             </Navbar>
         )
