@@ -1,0 +1,47 @@
+.dropdown-menu {
+    max-height: 20rem;
+    overflow-y: auto;
+    width: 40rem;
+}
+
+.dropdown-menu::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.dropdown-menu::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background: #7e7e7e;
+  border: 0px none #ffffff;
+  border-radius: 42px;
+}
+.dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: #7e7e7e;
+}
+.dropdown-menu::-webkit-scrollbar-thumb:active {
+  background: #7e7e7e;
+}
+.dropdown-menu::-webkit-scrollbar-track {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.dropdown-menu::-webkit-scrollbar-track:hover {
+  background: #ffffff;
+}
+.dropdown-menu::-webkit-scrollbar-track:active {
+  background: #ffffff;
+}
+.dropdown-menu::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.searchBar {
+    width: 40rem;
+}
+
+.resultItem div {
+    width: 5rem;
+}

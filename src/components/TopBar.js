@@ -9,10 +9,11 @@ export default class TopBar extends Component {
         const { theme } = this.props;
         return (
             <Navbar expand="md" style={{...style, backgroundColor: theme.primary}}>
-                <NavbarBrand style={{color: theme.textPrimary}}>Yet Another Airplane Map</NavbarBrand>
-                <Nav navbar className="ml-auto">
+                <div style={{display: "flex", justifyContent: "space-between", width: '100%'}}>
+                    <NavbarBrand style={{color: theme.textPrimary, flex: 1}}>Yet Another Airplane Map</NavbarBrand>
                     <Search />
-                </Nav>
+                    <div style={{flex: 1}}></div>
+                </div>
             </Navbar>
         )
     }
