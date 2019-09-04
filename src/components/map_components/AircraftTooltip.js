@@ -16,12 +16,14 @@ export default class AircraftTooltip extends Component {
         return null;
     }
 
-    
-
-    
-    render() {
+   render() {
         const { callsign, dep, arr, aircraft, visible } = this.props.data;
         const { theme } = this.props;
+
+        // Check if object or its properties are a null.
+        const depIcao = dep == null ? '' : dep.code == null ? '' : dep.code.icao;
+        const arrIcao = arr == null ? '' : arr.code == null ? '' : arr.code.icao;
+
         return (
             <Tooltip permanent={visible} offset={[0, -10]} direction={"top"} style={{border: "none"}}>
                 <div style={{padding: 5, backgroundColor: theme.primary, borderColor: theme.primary, color: theme.textPrimary}}>
@@ -29,7 +31,7 @@ export default class AircraftTooltip extends Component {
                             {this.getLogoFromCallsign(callsign)}
                             <div>
                                 <p style={{margin: 0, fontWeight: 'bold'}}>{callsign}</p>
-                                <p style={{margin: 0, color: 'gray'}}>{dep.code.icao} - {arr.code.icao}</p>
+                                <p style={{margin: 0, color: 'gray'}}>{depIcao} - {arrIcao}</p>
                             </div>
                     </div>
                 </div>
