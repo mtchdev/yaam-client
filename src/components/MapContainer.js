@@ -72,7 +72,8 @@ class MapContainer extends Component {
     if (
       (this.props.pending && !nextProps.pending) ||
       this.state.bounds !== nextState.bounds ||
-      this.props.settings !== nextProps.settings
+      this.props.settings !== nextProps.settings ||
+      this.props.focusedData !== nextProps.focusedData
     )
       return true;
     return false;

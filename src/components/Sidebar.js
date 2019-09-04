@@ -7,8 +7,7 @@ import '../assets/css/Sidebar.css'
 class Sidebar extends Component {
     render() {
         const { theme } = this.props;
-        console.log(theme);
-        
+
         if(this.props.focused && this.props.focusedData != null) {
             return(
                 <div className={"sidebar"} style={{backgroundColor: theme.secondary}}>
