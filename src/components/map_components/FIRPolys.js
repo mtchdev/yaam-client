@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Polygon } from "react-leaflet";
+import FIRPoly from './FIRPoly';
 
 const ignored = ["ULMM", "CZQX"];
 
@@ -21,8 +21,6 @@ export default class FIRPolys extends Component {
     this.fetchFIRData();
   };
 
-  componentDidUpdate 
-
   // Match to correct polygon. Builds the polygon list.
   matchControllersToPolygons = (data, atc) => {
     // Simulate online stations for tests here:
@@ -30,12 +28,25 @@ export default class FIRPolys extends Component {
     const polys = [];
     if (data != null) {
       data.forEach((sector, index) => {
-        const { coordinates: coordsList } = sector.geometry;
-        const { FIRname: name, ICAOCODE: code } = sector.properties;
+        let { coordinates: coordsList } = sector.geometry;
+        const { FIRname: name, ICAOCODE: code } = sector.properties;          
 
         if (ignored.includes(code)) {
           return;
         }
+
+        if (coordsList.length > 1) {
+          if (coordsList[0].length === 1) {
+
+            // Special cases
+            if (code === 'LPPC'){
+              coordsList = coordsList[1]
+            } else {
+              coordsList = coordsList[0]
+            }
+          }
+        }
+
 
         let fill = false;
         let weight = 0.5;
@@ -51,8 +62,9 @@ export default class FIRPolys extends Component {
           }
         });
 
+
         polys.push(
-          <Polygon
+          <FIRPoly
             key={index}
             onClick={() => console.log(`${code}: ${name}`)}
             weight={weight}
@@ -72,7 +84,15 @@ export default class FIRPolys extends Component {
 
   // For specific cases, an FIR might have a different name on the network than it does in the ICAO DB.
   nameOnNetwork = FIR => {
-    const list = [{ netName: "LON", FIR: "EGTT" }];
+    const list = [
+      { netName: "LON", FIR: "EGTT" },
+      { netName: "OAK", FIR: "KZOA" },
+      { netName: "TOR", FIR: "CZYZ" },
+      { netName: "JAX", FIR: "KZJX" },
+      { netName: "HOU", FIR: "KZHU" },
+      { netName: "NY", FIR: "KZNY" },
+      { netName: "CLE", FIR: "KZOB" },
+    ];
 
     for (const e of list) {
       if (e.FIR === FIR) return e.netName;
@@ -94,6 +114,18 @@ export default class FIRPolys extends Component {
 
         /* For some reason, ICAO data comes like this: long, lat.
               Leaflet (and pretty much any sane person) accepts coords as 'lat, long'... */
+
+        if (coordsList.length > 1) {
+          if (coordsList[0].length === 1) {
+            coordsList.forEach(lvl1 => {
+              let lvl2 = lvl1[0];
+              lvl2.forEach(lvl3 => {
+                lvl3 = lvl3.reverse();
+              });
+            });
+          }
+        }
+
         let list = coordsList[0];
         list.forEach(element => {
           element = element.reverse();
