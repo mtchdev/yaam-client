@@ -11,8 +11,9 @@ import {
 
 
  // Usually called from aircraft marker
-export const focusAircraft = () => ({
+export const focusAircraft = (shouldGoTo = false) => ({
     type: FOCUS_AIRCRAFT,
+    shouldGoTo
 })
 
 export const unFocusAircraft = () => ({

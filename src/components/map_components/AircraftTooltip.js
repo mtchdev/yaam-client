@@ -17,7 +17,7 @@ export default class AircraftTooltip extends Component {
     }
 
    render() {
-        const { callsign, dep, arr, aircraft, visible } = this.props.data;
+        const { callsign, dep, arr, visible } = this.props.data;
         const { theme } = this.props;
 
         // Check if object or its properties are a null.

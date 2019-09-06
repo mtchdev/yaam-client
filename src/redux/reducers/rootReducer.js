@@ -38,7 +38,8 @@ function rootReducer(state = initalState, action) {
         case FOCUS_AIRCRAFT:
             return {
                 ...state,
-                focused: true
+                focused: true,
+                goToFocused: action.shouldGoTo
             }
         case UNFOCUS_AIRCRAFT:
             return {

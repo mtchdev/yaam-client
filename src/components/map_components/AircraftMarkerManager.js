@@ -12,8 +12,7 @@ export default class AircraftMarkerManager extends Component {
     const { pilots, bounds, focusedData, zoom,
              } = this.props;
     const iconSize = zoom+19;
-    
-    let alwaysShowToolTip = true;
+
     
     const iconUrl = this.props.isDarkMode ? "airplane_dark.png" :  "airplane_light.png";
 
@@ -38,6 +37,7 @@ export default class AircraftMarkerManager extends Component {
           </Marker>
         );
       }
+      return null;
     });
   }
   

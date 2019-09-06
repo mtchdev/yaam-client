@@ -1,6 +1,6 @@
 import { fetchAircraftError, fetchAircraftPending, fetchAircraftSuccess, focusAircraft, unFocusAircraft } from "../redux/actions";
 
-const fetchAircraftData = (callsign) => {
+const fetchAircraftData = (callsign, shouldGoTo) => {
     return async dispatch => {
         dispatch(fetchAircraftPending(callsign));
         try {
@@ -12,7 +12,7 @@ const fetchAircraftData = (callsign) => {
 
             res = await res.json();
             dispatch(fetchAircraftSuccess(res));
-            dispatch(focusAircraft())
+            dispatch(focusAircraft(shouldGoTo))
         } catch (error) {
             dispatch(fetchAircraftError(error));
             dispatch(unFocusAircraft())
