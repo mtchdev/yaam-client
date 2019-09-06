@@ -33,8 +33,8 @@ class Search extends Component {
                   {
                       searchResults.map((flight, index) => {
                           const {callsign, dep, arr, aircraft} = flight;
-                          const depICAO = dep == null ? '' : dep.code == null ? '' : dep.code.icao
-                          const arrICAO = arr == null ? '' : arr.code == null ? '' : arr.code.icao
+                          const depICAO = dep == null ? '' : dep.code == null ? '' : dep.code.icao == null ? '' : dep.code.icao
+                          const arrICAO = arr == null ? '' : arr.code == null ? '' : arr.code.icao == null ? '' : arr.code.icao
                           // Took me a while to get the regex right, but what it basically does is remove all the slashes and stuff.
                           let formattedAircraft = aircraft == null ? null : aircraft.match(/(?:[\w\/])?([\d\w]{4})/);
                           console.log(formattedAircraft);
