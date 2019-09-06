@@ -71,6 +71,7 @@ class MapContainer extends Component {
   shouldComponentUpdate = (nextProps, nextState) => {
     if (
       (this.props.pending && !nextProps.pending) ||
+      (this.props.focused && !nextProps.focused) ||
       this.state.bounds !== nextState.bounds ||
       this.props.settings !== nextProps.settings ||
       this.props.focusedData !== nextProps.focusedData
