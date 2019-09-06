@@ -1,4 +1,4 @@
-import { fetchAircraftError, fetchAircraftPending, fetchAircraftSuccess, focusAircraft } from "../redux/actions";
+import { fetchAircraftError, fetchAircraftPending, fetchAircraftSuccess, focusAircraft, unFocusAircraft } from "../redux/actions";
 
 const fetchAircraftData = (callsign) => {
     return async dispatch => {
@@ -15,6 +15,7 @@ const fetchAircraftData = (callsign) => {
             dispatch(focusAircraft())
         } catch (error) {
             dispatch(fetchAircraftError(error));
+            dispatch(unFocusAircraft())
         }
     }
 }

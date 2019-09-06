@@ -36,12 +36,14 @@ export default class FIRPolys extends Component {
         }
 
         if (coordsList.length > 1) {
-          console.log(coordsList);
-          
           if (coordsList[0].length === 1) {
-            coordsList = coordsList[0]
-            console.log(coordsList);
-            
+
+            // Special cases
+            if (code === 'LPPC'){
+              coordsList = coordsList[1]
+            } else {
+              coordsList = coordsList[0]
+            }
           }
         }
 
