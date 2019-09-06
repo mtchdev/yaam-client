@@ -139,7 +139,7 @@ class MapContainer extends Component {
   // Changes the map viewport to focus on the focused aircraft
   goTo = (station) => {
     const { coords } = station;
-      this.setState({center: [coords.lat, coords.long ], zoom: 8})
+      this.setState({center: [coords.lat, coords.long ], zoom: 6})
   };
 
   // Gets the position of a focused aircraft on the map.

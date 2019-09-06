@@ -11,7 +11,7 @@ export default class TopBar extends Component {
             <Navbar expand="md" style={{...style, backgroundColor: theme.primary}}>
                 <div style={{display: "flex", justifyContent: "space-between", width: '100%'}}>
                     <NavbarBrand style={{color: theme.textPrimary, flex: 1}}>Yet Another Airplane Map</NavbarBrand>
-                    <Search />
+                    <Search isDarkMode={this.props.isDarkMode} style={{color: theme.textPrimary, backgroundColor: theme.primary}}/>
                     <div style={{flex: 1}}></div>
                 </div>
             </Navbar>

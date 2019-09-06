@@ -2,6 +2,22 @@
     max-height: 20rem;
     overflow-y: auto;
     width: 40rem;
+    background-color: black;
+}
+
+.searchBar-dark input, .searchBar-dark span {
+  background-color: #1a1a1a !important;
+  color: white !important;
+  border-color: gray;
+}
+
+.dropdown-menu-dark {
+  background-color: #1a1a1a !important;
+  color: white !important;
+}
+
+.dropdown-menu-dark button {
+  color: white !important;
 }
 
 .dropdown-menu::-webkit-scrollbar {

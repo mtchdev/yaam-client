@@ -12,7 +12,7 @@ class MainContainer extends Component {
             <Container fluid style={{padding: 0, height: '100vh'}}>
                 <Row noGutters>
                     <Col md="12">
-                        <TopBar theme={this.props.themeColors} height="5vh"></TopBar>
+                        <TopBar theme={this.props.themeColors} isDarkMode={this.props.isDarkMode} height="5vh"></TopBar>
                     </Col>
                 </Row>
                 <Sidebar theme={this.props.themeColors} />
@@ -28,7 +28,8 @@ class MainContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    themeColors: state.settings.themeColors
+    themeColors: state.settings.themeColors,
+    isDarkMode: state.settings.isDarkMode
 })
 
 const mapDispatchToProps = {

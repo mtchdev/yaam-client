@@ -4,6 +4,7 @@ import { FormGroup, FormInput, Button, InputGroup, InputGroupAddon, InputGroupTe
 import '../assets/css/search.css'
 import fetchAircraftExtendedData from "../lib/focusOnAircraft";
 import { unFocusAircraft } from "../redux/actions";
+import { MdSearch } from "react-icons/md";
 
 class Search extends Component {
     constructor(props) {
@@ -17,11 +18,16 @@ class Search extends Component {
     
     render() {
         const { searchResults, searchValue } = this.state;
+        const { style, isDarkMode } = this.props;
+
+        let dropdownMenuClass = isDarkMode ? 'dropdown-menu-dark' : '';
+        let searchBarClass = isDarkMode ? 'searchBar-dark' : '';
+
         return (
           <div className="searchBar">
-            <InputGroup size="md">
+            <InputGroup size="md" className={searchBarClass}>
               <InputGroupAddon type="prepend">
-                <InputGroupText>{/* Search Icon */}</InputGroupText>
+                <InputGroupText><MdSearch /></InputGroupText>
               </InputGroupAddon>
               <FormInput
                 placeholder="Search..."
@@ -31,8 +37,7 @@ class Search extends Component {
             </InputGroup>
             {searchResults.length !== 0 && (
               <Dropdown open={true} toggle={() => this.setState({searchResults: []})}>
-                <DropdownMenu size="md">
-                  
+                <DropdownMenu size="md" className={dropdownMenuClass}>
                   {
                       searchResults.map((flight, index) => {
                           const {callsign, dep, arr, aircraft} = flight;
@@ -45,7 +50,7 @@ class Search extends Component {
                           const flightplanText = depICAO === '' && arrICAO === '' ? "No Flightplan" : `${depICAO} - ${arrICAO}`
                           
                         return (
-                            <DropdownItem key={index} onClick={() => this.handleClick(callsign)}>
+                            <DropdownItem key={index} onClick={() => this.handleClick(callsign)} className="dropdown-item">
                                 <div style={{display: "flex", justifyContent: 'space-between'}} className={"resultItem"}>
                                     <div style={{fontWeight: 'bold'}}>{callsign}</div>
                                     <div>{flightplanText}</div>
