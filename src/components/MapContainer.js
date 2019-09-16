@@ -22,7 +22,7 @@ const UPDATE_TIME = 30;
 const LIGHT_TILES = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
 const DARK_TILES = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
 const ATTR =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors &copy; <a href=\"https://carto.com/attributions\">CARTO</a>";
 const DEFAULT_CENTER = [30, 0];
 const DEFAULT_ZOOM_LEVEL = 3;
 
@@ -33,7 +33,7 @@ class MapContainer extends Component {
       data: [],
       FIRs: null,
       bounds: L.latLngBounds(L.latLng(90, -180), L.latLng(-90, 180)),
-      zoom: DEFAULT_ZOOM_LEVEL,
+      zoom: DEFAULT_ZOOM_LEVEL
     };
   }
 
@@ -42,7 +42,7 @@ class MapContainer extends Component {
     const { allAircraft, focusedData, settings} = this.props;
     const { pilots, atc } = allAircraft;
 
-    const trail = focusedData != null ? focusedData.trail : null;
+    const trail = focusedData ? focusedData.trail : null;
     const tiles = settings.isDarkMode ? DARK_TILES : LIGHT_TILES;
     return (
       <Map
@@ -69,23 +69,20 @@ class MapContainer extends Component {
         The map will rerender only if the bounds are changed or new data is loaded.
   */
   shouldComponentUpdate = (nextProps, nextState) => {
-    if (
+    return (
       (this.props.pending && !nextProps.pending) ||
       (this.props.focused && !nextProps.focused) ||
       this.state.bounds !== nextState.bounds ||
       this.props.settings !== nextProps.settings ||
       this.props.focusedData !== nextProps.focusedData
     )
-      return true;
-    return false;
   };
 
   componentDidMount = () => {
-    const { fetchAllData } = this.props;
-    const { addBoundsChangeListener } = this;
+    const fetchAllData = this.props;
+    const addBoundsChangeListener = this;
 
     fetchAllData();
-
     addBoundsChangeListener();
 
     setInterval(this.updateData, UPDATE_TIME * 1000);
@@ -111,7 +108,7 @@ class MapContainer extends Component {
     } = this.props;
 
     fetchAllData();
-    if (!pending && focusedData != null) {
+    if (!pending && focusedData) {
       fetchAircraftExtendedData(focusedData.callsign);
     }
   };

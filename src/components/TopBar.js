@@ -5,7 +5,7 @@ import "shards-ui/dist/css/shards.min.css"
 
 export default class TopBar extends Component {
     render() {
-        const { theme } = this.props;
+        const theme = this.props;
         return (
             <Navbar expand="md" style={{...style, backgroundColor: theme.primary}}>
                 <NavbarBrand style={{color: theme.textPrimary}}>Yet Another Airplane Map</NavbarBrand>
@@ -21,5 +21,6 @@ const style = {
     paddingTop: 0,
     height: '6vh',
     boxShadow: '10px 0px 10px 0px rgba(0,0,0,0.1)',
-    zIndex: 12000,
+    zIndex: 12000
 }
+
