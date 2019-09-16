@@ -44,7 +44,7 @@ export default class FlightHistory extends Component {
             ticks: {
                 min: 0,
                 callback: (value, index, values) => {
-                    return ''
+                    return ""
                 },
                 mirror: true
             }
@@ -60,7 +60,7 @@ export default class FlightHistory extends Component {
       },
       legend: {
         display: true,
-        position: 'bottom',
+        position: "bottom",
         labels: {
           usePointStyle: true
         },
@@ -82,7 +82,7 @@ export default class FlightHistory extends Component {
     return (
       <Card style={{backgroundColor: theme.primary, color: theme.textPrimary}} >
         <CardHeader><h5 style={{margin: 0, color: theme.textPrimary}}>Flight History</h5></CardHeader>
-        <CardBody style={{padding: 0, paddingBottom: '15px', paddingTop: '15px'}}>
+        <CardBody style={{padding: 0, paddingBottom: "15px", paddingTop: "15px"}}>
           <div>
             <Line data={rootData} options={options} />
           </div>
@@ -110,3 +110,4 @@ export default class FlightHistory extends Component {
     };
   };
 }
+
