@@ -8,27 +8,21 @@ class Sidebar extends Component {
     render() {
         const { theme } = this.props;
 
-        if(this.props.focused && this.props.focusedData != null) {
+        if(this.props.focused && this.props.focusedData) {
             return(
-                <div className={"sidebar"} style={{backgroundColor: theme.secondary}}>
+                <div className="sidebar" style={{backgroundColor: theme.secondary}}>
                     <Details theme={theme} data={this.props.focusedData} />
                     <History theme={theme} data={this.props.focusedData.trail} />
                 </div>
                 
             )
         } else {
-            return(
-                null
-            )
+            return null;
         }
     }
 
-    shouldComponentUpdate(){
-        const { pending } = this.props;
-        if (pending) {
-            return false;
-        }
-        return true;
+    shouldComponentUpdate() {
+        return typeof this.props !== "undefined";
     }
 }
 
@@ -43,3 +37,4 @@ const mapDispatchToProps = null;
 export default connect(
     mapStateToProps, mapDispatchToProps
 )(Sidebar)
+

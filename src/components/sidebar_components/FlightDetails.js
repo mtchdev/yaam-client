@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getDistance } from 'geolib';
+import { getDistance } from "geolib";
 import { FaArrowCircleRight, FaPlaneArrival, FaPlaneDeparture, FaPlane } from "react-icons/fa";
 import {
   Card,
@@ -70,7 +70,7 @@ export default class FlightHistory extends Component {
             </div>
             <div>
               <p style={{ fontSize: 14 }}>AIRCRAFT TYPE</p>
-              {/* <p style={{color: 'gray'}}>{aircraft}</p> */}
+              {/* <p style={{color: "gray"}}>{aircraft}</p> */}
               <Badge theme="primary">{aircraft}</Badge>
             </div>
           </div>
@@ -91,7 +91,7 @@ export default class FlightHistory extends Component {
           <div className={"subdetailsFlex"}>
             <div>
               <p style={{ fontSize: 14 }}>PILOT</p>
-              <p style={{color: 'gray'}}>{name}</p>
+              <p style={{color: "gray"}}>{name}</p>
             </div>
             <div>
               <p style={{ fontSize: 14 }}>FIELD 5</p>
@@ -109,8 +109,8 @@ export default class FlightHistory extends Component {
 }
 
 const calculateProgress = (depCoords, arrCoords, position) => {
-    if (depCoords.latitude == null || depCoords.longitude == null ||
-        arrCoords.latitude == null || arrCoords.longitude == null) return 0;
+    if (!depCoords.latitude || !depCoords.longitude ||
+        !arrCoords.latitude || !arrCoords.longitude) return 0;
     const dist = getDistance(depCoords, arrCoords);
     const distLeft = getDistance(arrCoords, position);
     return Math.floor((dist-distLeft)/dist*100);

@@ -16,9 +16,9 @@ class SettingsButton extends Component {
     }
 
     render() {
-        const containerClasses = ['settingsContainer'];
-        const buttonClasses = ['settingsButton'];
-        const cardClasses = ['settingsCard'];
+        const containerClasses = ["settingsContainer"];
+        const buttonClasses = ["settingsButton"];
+        const cardClasses = ["settingsCard"];
 
         if (this.state.containerOpen) {
           containerClasses.push("settingsContainerOpen");
@@ -88,3 +88,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(SettingsButton)
+

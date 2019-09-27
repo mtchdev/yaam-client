@@ -1,19 +1,19 @@
-import React from 'react';
-import { connect } from 'react-redux'
-import { Marker as LeafletMarker } from 'leaflet';
-import { LeafletProvider, withLeaflet, MapLayer } from 'react-leaflet';
-import 'leaflet-rotatedmarker';
+import React from "react";
+import { connect } from "react-redux"
+import { Marker as LeafletMarker } from "leaflet";
+import { LeafletProvider, withLeaflet, MapLayer } from "react-leaflet";
+import "leaflet-rotatedmarker";
 import fetchAircraftExtendedData from "../../lib/focusOnAircraft";
 import { unFocusAircraft } from "../../redux/actions";
 
 class RotatedMarker extends MapLayer {
   static defaultProps = {
-    rotationOrigin: 'center',
+    rotationOrigin: "center",
   };
 
   createLeafletElement(props) {
     const el = new LeafletMarker(props.position, this.getOptions(props));
-    el.on('click', () => this.handleClick(this.props))
+    el.on("click", () => this.handleClick(this.props))
     this.contextValue = { ...props.leaflet, popupContainer: el };
     return el;
   }
@@ -63,9 +63,9 @@ class RotatedMarker extends MapLayer {
 
 
   render() {
-    const { children } = this.props;
-    return children == null || this.contextValue == null ? null : (
-        <LeafletProvider value={this.contextValue}>{children}</LeafletProvider>   
+    const children = this.props;
+    return !children || !this.contextValue ? null : (
+        <LeafletProvider value={this.contextValue}>{children}</LeafletProvider>
     );
   }
 }
@@ -83,3 +83,4 @@ const mapDispatchToProps = {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(withLeaflet(RotatedMarker));
+

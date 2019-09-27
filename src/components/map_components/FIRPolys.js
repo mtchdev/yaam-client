@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import FIRPoly from './FIRPoly';
+import FIRPoly from "./FIRPoly";
 
 const ignored = ["ULMM", "CZQX"];
 
@@ -39,7 +39,7 @@ export default class FIRPolys extends Component {
           if (coordsList[0].length === 1) {
 
             // Special cases
-            if (code === 'LPPC'){
+            if (code === "LPPC"){
               coordsList = coordsList[1]
             } else {
               coordsList = coordsList[0]
@@ -101,7 +101,7 @@ export default class FIRPolys extends Component {
     return FIR;
   };
 
-  // This data isn't expected to change, ever, so it would be overkill to keep it in our redux store.
+  // This data isn"t expected to change, ever, so it would be overkill to keep it in our redux store.
   fetchFIRData = async () => {
     try {
       let data = await fetch(
@@ -113,7 +113,7 @@ export default class FIRPolys extends Component {
         const { coordinates: coordsList } = sector.geometry;
 
         /* For some reason, ICAO data comes like this: long, lat.
-              Leaflet (and pretty much any sane person) accepts coords as 'lat, long'... */
+              Leaflet (and pretty much any sane person) accepts coords as "lat, long"... */
 
         if (coordsList.length > 1) {
           if (coordsList[0].length === 1) {
