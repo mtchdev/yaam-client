@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Polyline } from "react-leaflet";
 export default class AircraftPath extends Component {
     render() {
-        let trail = this.props;
+        let { trail } = this.props;
         if (trail) {
             
             trail = trail.filter((point) => {
