@@ -79,8 +79,8 @@ class MapContainer extends Component {
   };
 
   componentDidMount = () => {
-    const fetchAllData = this.props;
-    const addBoundsChangeListener = this;
+    const { fetchAllData } = this.props;
+    const { addBoundsChangeListener } = this;
 
     fetchAllData();
     addBoundsChangeListener();

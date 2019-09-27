@@ -5,7 +5,7 @@ import "shards-ui/dist/css/shards.min.css"
 
 export default class TopBar extends Component {
     render() {
-        const theme = this.props;
+        const { theme } = this.props;
         return (
             <Navbar expand="md" style={{...style, backgroundColor: theme.primary}}>
                 <NavbarBrand style={{color: theme.textPrimary}}>Yet Another Airplane Map</NavbarBrand>

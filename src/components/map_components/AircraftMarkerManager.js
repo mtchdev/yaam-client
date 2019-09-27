@@ -50,8 +50,8 @@ export default class AircraftMarkerManager extends Component {
   // Checks if given coordinates are in given bounds
   isInBounds = (coords, bounds) => {
     if (
-      coords.lat === null ||
-      coords.long === null) return false;
+      !coords.lat ||
+      !coords.long) return false;
     
     return (
       coords.lat > bounds.getSouth() &&
@@ -61,3 +61,4 @@ export default class AircraftMarkerManager extends Component {
     );
   };
 }
+

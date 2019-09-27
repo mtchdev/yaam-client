@@ -6,7 +6,7 @@ import '../assets/css/Sidebar.css'
 
 class Sidebar extends Component {
     render() {
-        const theme = this.props;
+        const { theme } = this.props;
 
         if(this.props.focused && this.props.focusedData) {
             return(
